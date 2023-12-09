@@ -7,13 +7,11 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public GameObject planePrefab; 
     private Transform lastPlaneEnd;
-
     void Start()
     {
-        GameObject initialPlane = Instantiate(planePrefab, transform.position, Quaternion.identity);
+        GameObject initialPlane = Instantiate(planePrefab, transform.position, Quaternion.Euler(90f, 0f, 180f));
         lastPlaneEnd = initialPlane.transform.Find("EndMarker");
     }
-
     void Update()
     {
         float verticalInput = 3f; // Constant forward movement
@@ -25,18 +23,19 @@ public class PlayerMovement : MonoBehaviour
             DestroyOldPlanes();
         }
     }
-
+    
     void SpawnNewPlane()
-{
-    GameObject newPlane = Instantiate(planePrefab, lastPlaneEnd.position, Quaternion.identity);
-    Transform endMarker = newPlane.transform.Find("EndMarker");
-    if (endMarker != null)
     {
-        lastPlaneEnd = endMarker;
+        GameObject newPlane = Instantiate(planePrefab, lastPlaneEnd.position, lastPlaneEnd.rotation);
+        Transform endMarker = newPlane.transform.Find("EndMarker");
+        if (endMarker != null)
+        {
+            lastPlaneEnd = endMarker;
+        }
+        Vector3 offset = lastPlaneEnd.position - newPlane.transform.position;
+        newPlane.transform.position += offset;
     }
-    Vector3 offset = lastPlaneEnd.position - newPlane.transform.position;
-    newPlane.transform.position += offset;
-}
+
 
 
     void DestroyOldPlanes()
@@ -46,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (oldPlane.transform.position.z < transform.position.z - GetPlaneLength())
             {
-                Debug.Log("Destroying plane at position: " + oldPlane.transform.position);
                 Destroy(oldPlane);
             }
         }
