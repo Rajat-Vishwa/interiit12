@@ -73,7 +73,7 @@ Material:
     m_Colors:
     - _ScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _effectColor: {r: 0.47727355, g: 0.2091601, b: 2.9960787, a: 0}
-    - _noiseSpeed: {r: 0.005, g: 0.01, b: 0, a: 0}
+    - _noiseSpeed: {r: 0.005, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1485157263143836436
 MonoBehaviour:
