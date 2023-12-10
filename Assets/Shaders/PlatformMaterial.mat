@@ -41,6 +41,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 92b102fb6f3d0d74f91ef6f0065e13a9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_5f7a9575537f469d83d4ee7ec2ed6c60_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 330d29998240d3547bd972a3e632ff64, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _emissionTex:
         m_Texture: {fileID: 2800000, guid: bdc77a5c2ab0c6341a4e6b7e2120ab6d, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -65,7 +69,8 @@ Material:
     - _brightnessOffset: 0.12
     - _invertTex: 1
     m_Colors:
-    - _Color: {r: 1.4245611, g: 1.3473831, b: 2.150943, a: 0}
-    - _scrollSpeed: {r: 0, g: 0.1, b: 0, a: 0}
+    - _Color: {r: 2.8716776, g: 0.7693928, b: 0.7895529, a: 0}
+    - _edgeColor: {r: 0.4772736, g: 0.2091601, b: 2.996079, a: 0}
+    - _scrollSpeed: {r: 0, g: 0.08, b: 0, a: 0}
     - _tileScale: {r: 1, g: 10, b: 0, a: 0}
   m_BuildTextureStacks: []
