@@ -5,17 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class mainmenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void Quit()
     {
         Debug.Log("Quit");
@@ -30,11 +19,5 @@ public class mainmenu : MonoBehaviour
     {
         SceneManager.LoadScene("credits");
         Debug.Log("credits");
-    }
-
-    public void hp()
-    {
-        SceneManager.LoadScene("howtoplay");
-        Debug.Log("how to play");
     }
 }
