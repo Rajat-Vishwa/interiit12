@@ -2,29 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleBehaviour : MonoBehaviour
+public class TextureSymmetrizer : MonoBehaviour
 {
-    public float scrollSpeed = 0.8f;
-    public GameObject mainPlane;
+    public Texture2D texture;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        transform.Translate(-Vector3.forward * scrollSpeed * Time.deltaTime);    
-    }
-
-    public void Slice(Vector2 startUV, Vector2 endUV)
-    {
-        Texture2D texture = mainPlane.GetComponent<Renderer>().material.GetTexture("_alphaTex") as Texture2D;
-        Texture2D newTexture = Symmetrize(texture, startUV, endUV);
-        mainPlane.GetComponent<Renderer>().material.SetTexture("_alphaTex", newTexture);
-    }
-
-    public Texture2D Symmetrize(Texture2D texture, Vector2 startUV, Vector2 endUV)
+    public void Symmetrize(Vector2 startUV, Vector2 endUV)
     {
         // Convert UV coordinates to pixel coordinates
         int startX = (int)(startUV.x * texture.width);
@@ -58,7 +40,8 @@ public class ObstacleBehaviour : MonoBehaviour
                 int mirroredY = (int)(mirroredPos.y + startY);
 
                 // If the mirrored position is within the texture, set the color of the mirrored pixel to the color of the original pixel
-                if (mirroredX >= 0 && mirroredX < texture.width && mirroredY >= 0 && mirroredY < texture.height){
+                if (mirroredX >= 0 && mirroredX < texture.width && mirroredY >= 0 && mirroredY < texture.height)
+                {
                     newTexture.SetPixel(mirroredX, mirroredY, texture.GetPixel(x, y));
                 }
             }
@@ -68,6 +51,6 @@ public class ObstacleBehaviour : MonoBehaviour
         newTexture.Apply();
 
         // Replace the original texture with the new texture
-        return newTexture;
+        texture = newTexture;
     }
 }

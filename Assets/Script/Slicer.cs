@@ -12,7 +12,7 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     public LayerMask slicableLayer;
     public Vector3 offset;
 
-    Coroutine fadeLineRendererCoroutine;
+    public Vector2 startUV, endUV;
 
     void Start()
     {
@@ -29,32 +29,9 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             lineRenderer.enabled = true;
         }
         else{
-            // if (lineRenderer.enabled && fadeLineRendererCoroutine == null){
-            //     fadeLineRendererCoroutine = StartCoroutine(FadeLineRenderer());
-            // }
             lineRenderer.enabled = false;
         }
     }
-
-    // IEnumerator FadeLineRenderer()
-    // {
-    //     float duration = 1f; // Duration of the fade
-    //     float elapsedTime = 0f;
-    //     Color startColor = lineRenderer.material.GetColor("_EmissionColor");
-    //     Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0); // Target color with 0 alpha
-
-    //     while (elapsedTime < duration){
-    //         Color newColor = Color.Lerp(startColor, endColor, elapsedTime / duration);
-    //         lineRenderer.material.SetColor("_EmissionColor", newColor);
-    //         elapsedTime += Time.deltaTime;
-    //         yield return null;
-    //     }
-
-    //     lineRenderer.material.SetColor("_EmissionColor", endColor);
-    //     fadeLineRendererCoroutine = null;
-    //     lineRenderer.enabled = false;
-    // }
-
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -78,14 +55,18 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             if(lineStart.position == Vector3.zero){
                 RaycastHit hit = ShootRayAtPoint(Input.mousePosition);
                 if(hit.collider != null){
+                    startUV = hit.textureCoord; // Get the UV of the hit point
                     lineStart.position = hit.point + offset;
                     lineStart.parent = hit.transform.parent;
                 }
             }else{
                 RaycastHit hit = ShootRayAtPoint(Input.mousePosition);
                 if(hit.collider != null){
+                    endUV = hit.textureCoord; // Get the UV of the hit point
                     lineEnd.position = hit.point + offset;
                     lineEnd.parent = hit.transform.parent;
+
+                    hit.transform.parent.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
                 }
             }
         }
