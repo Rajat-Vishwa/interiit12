@@ -42,14 +42,16 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     {
         isDrawing = false;
 
-        // Recalculate UV Coordinates
-        // Vector3 startPos = lineStart.localPosition.normalized;
-        // Vector3 endPos = lineEnd.localPosition.normalized;
-
-        // startUV = new Vector2((1f - startPos.x)/2f, (1f - startPos.z)/2f);
-        // endUV = new Vector2((1f - endPos.x)/2f, (1f - endPos.z)/2f);
+        // Recalculate UV Coordinates for drawing plane scale 2 times main plane 
+        startUV = (startUV - Vector2.one * 0.25f) * 2f;
+        endUV = (endUV - Vector2.one * 0.25f) * 2f;
+        // Clamp UV Coordinates to the range [0, 1]
+        startUV = new Vector2(Mathf.Clamp01(startUV.x), Mathf.Clamp01(startUV.y));
+        endUV = new Vector2(Mathf.Clamp01(endUV.x), Mathf.Clamp01(endUV.y));
+        Debug.Log("Recalculated UV Coordinates " + startUV + "; " + endUV);
 
         lineEnd.parent?.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
+
         lineStart.parent = null;
         lineEnd.parent = null;
         lineStart.position = Vector3.zero;

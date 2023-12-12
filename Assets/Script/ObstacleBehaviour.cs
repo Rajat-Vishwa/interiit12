@@ -19,12 +19,12 @@ public class ObstacleBehaviour : MonoBehaviour
 
     public void Slice(Vector2 startUV, Vector2 endUV)
     {
+        Debug.Log("Received UV Coordinates " + startUV + "; " + endUV);
         Texture2D texture = mainPlane.GetComponent<Renderer>().material.GetTexture("_AlphaTexture") as Texture2D;
-        Texture2D newTexture = Symmetrize(texture, startUV, endUV);
-        mainPlane.GetComponent<Renderer>().material.SetTexture("_MirrorTexture", newTexture);
+        StartCoroutine(Symmetrize(texture, startUV, endUV));
     }
 
-    public Texture2D Symmetrize(Texture2D texture, Vector2 startUV, Vector2 endUV)
+    IEnumerator Symmetrize(Texture2D texture, Vector2 startUV, Vector2 endUV)
     {
         // Convert UV coordinates to pixel coordinates
         int startX = (int)(startUV.x * texture.width);
@@ -61,12 +61,19 @@ public class ObstacleBehaviour : MonoBehaviour
                     newTexture.SetPixel(mirroredX, mirroredY, texture.GetPixel(x, y));
                 }
             }
+            if(y % 10 == 0)
+                yield return null;
         }
+        
 
         // Apply the changes to the new texture
         newTexture.Apply();
 
         // Replace the original texture with the new texture
-        return newTexture;
+        //mainPlane.GetComponent<Renderer>().material.SetTexture("_AlphaTexture", newTexture);
+        mainPlane.GetComponent<Renderer>().material.SetTexture("_MirrorTexture", newTexture);
     }
+
+    
+
 }
