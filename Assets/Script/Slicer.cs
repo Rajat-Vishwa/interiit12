@@ -1,42 +1,91 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Slicer : MonoBehaviour
+public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    private Vector3 startPos, endPos;
+    public Transform lineStart, lineEnd;
     private bool isDrawing = false;
+    public LineRenderer lineRenderer;
     public LayerMask slicableLayer;
+    public Vector3 offset;
+
+    Coroutine fadeLineRendererCoroutine;
 
     void Start()
     {
-        startPos = Vector3.zero;
-        endPos = Vector3.zero;
+        lineStart.position = Vector3.zero;
+        lineEnd.position = Vector3.zero;
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     void Update()
     {
-        isDrawing = Input.GetMouseButton(0);
-        if(Input.GetMouseButtonUp(0)){
-            isDrawing = false;
-            startPos = Vector3.zero;
-            endPos = Vector3.zero;
+        if(Input.GetMouseButton(0) &&   lineStart.position != Vector3.zero && lineEnd.position != Vector3.zero && isDrawing){
+            lineRenderer.SetPosition(0, lineStart.position);
+            lineRenderer.SetPosition(1, lineEnd.position);
+            lineRenderer.enabled = true;
+        }
+        else{
+            // if (lineRenderer.enabled && fadeLineRendererCoroutine == null){
+            //     fadeLineRendererCoroutine = StartCoroutine(FadeLineRenderer());
+            // }
+            lineRenderer.enabled = false;
         }
     }
 
-    void FixedUpdate()
+    // IEnumerator FadeLineRenderer()
+    // {
+    //     float duration = 1f; // Duration of the fade
+    //     float elapsedTime = 0f;
+    //     Color startColor = lineRenderer.material.GetColor("_EmissionColor");
+    //     Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0); // Target color with 0 alpha
+
+    //     while (elapsedTime < duration){
+    //         Color newColor = Color.Lerp(startColor, endColor, elapsedTime / duration);
+    //         lineRenderer.material.SetColor("_EmissionColor", newColor);
+    //         elapsedTime += Time.deltaTime;
+    //         yield return null;
+    //     }
+
+    //     lineRenderer.material.SetColor("_EmissionColor", endColor);
+    //     fadeLineRendererCoroutine = null;
+    //     lineRenderer.enabled = false;
+    // }
+
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        lineStart.position = Vector3.zero;
+        lineEnd.position = Vector3.zero;
+        isDrawing = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        lineStart.position = Vector3.zero;
+        lineEnd.position = Vector3.zero;
+        isDrawing = false;
+        lineStart.parent = transform;
+        lineEnd.parent = transform;
+    }
+
+    public void OnDrag(PointerEventData eventData)
     {
         if(isDrawing){
-            if(startPos == Vector3.zero){
+            if(lineStart.position == Vector3.zero){
                 RaycastHit hit = ShootRayAtPoint(Input.mousePosition);
                 if(hit.collider != null){
-                    startPos = hit.point;
+                    lineStart.position = hit.point + offset;
+                    lineStart.parent = hit.transform.parent;
                 }
             }else{
                 RaycastHit hit = ShootRayAtPoint(Input.mousePosition);
                 if(hit.collider != null){
-                    endPos = hit.point;
-                    Debug.DrawLine(startPos, endPos, Color.red, 0.1f);
+                    lineEnd.position = hit.point + offset;
+                    lineEnd.parent = hit.transform.parent;
                 }
             }
         }

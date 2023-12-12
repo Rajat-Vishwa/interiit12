@@ -66,11 +66,11 @@ Material:
     - _Animate: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _brightnessOffset: 0.12
+    - _brightnessOffset: 0.15
     - _invertTex: 1
     m_Colors:
-    - _Color: {r: 1.6739243, g: 1.5518323, b: 3.7901895, a: 0}
-    - _edgeColor: {r: 0.4772736, g: 0.2091601, b: 2.996079, a: 0}
+    - _Color: {r: 1.7078178, g: 1.690997, b: 2.0049853, a: 0}
+    - _edgeColor: {r: 0.847031, g: 0.72452825, b: 2.0000002, a: 0}
     - _scrollSpeed: {r: 0, g: 0.08, b: 0, a: 0}
     - _tileScale: {r: 1, g: 10, b: 0, a: 0}
   m_BuildTextureStacks: []
