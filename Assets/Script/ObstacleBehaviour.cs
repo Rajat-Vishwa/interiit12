@@ -14,7 +14,7 @@ public class ObstacleBehaviour : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(-Vector3.forward * scrollSpeed * Time.deltaTime);    
+        transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);    
     }
 
     public void Slice(Vector2 startUV, Vector2 endUV)
@@ -36,7 +36,7 @@ public class ObstacleBehaviour : MonoBehaviour
         Vector2 lineDir = new Vector2(endX - startX, endY - startY).normalized;
         Vector2 lineNormal = new Vector2(-lineDir.y, lineDir.x);
 
-        // Create a new texture to store the symmetrized image
+        // Create a new texture to store the symmetrized image 
         Texture2D newTexture = new Texture2D(texture.width, texture.height);
 
         // Iterate over each pixel in the texture
@@ -53,11 +53,10 @@ public class ObstacleBehaviour : MonoBehaviour
                 // Calculate the position of the mirrored pixel
                 Vector2 mirroredPos = relPos - 2 * distToLine * lineNormal;
 
-                // Convert the mirrored position back to absolute pixel coordinates
                 int mirroredX = (int)(mirroredPos.x + startX);
                 int mirroredY = (int)(mirroredPos.y + startY);
 
-                // If the mirrored position is within the texture, set the color of the mirrored pixel to the color of the original pixel
+                
                 if (mirroredX >= 0 && mirroredX < texture.width && mirroredY >= 0 && mirroredY < texture.height){
                     newTexture.SetPixel(mirroredX, mirroredY, texture.GetPixel(x, y));
                 }

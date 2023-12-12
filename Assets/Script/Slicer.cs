@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,7 +21,8 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     void Update()
     {
-        if(Input.GetMouseButton(0) &&   lineStart.position != Vector3.zero && lineEnd.position != Vector3.zero && isDrawing){
+        isDrawing = Input.GetMouseButton(0);
+        if(lineStart.position != Vector3.zero && lineEnd.position != Vector3.zero && isDrawing){
             lineRenderer.SetPosition(0, lineStart.position);
             lineRenderer.SetPosition(1, lineEnd.position);
             lineRenderer.enabled = true;
@@ -37,17 +36,24 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     {
         lineStart.position = Vector3.zero;
         lineEnd.position = Vector3.zero;
-        isDrawing = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        isDrawing = false;
+
+        // Recalculate UV Coordinates
+        // Vector3 startPos = lineStart.localPosition.normalized;
+        // Vector3 endPos = lineEnd.localPosition.normalized;
+
+        // startUV = new Vector2((1f - startPos.x)/2f, (1f - startPos.z)/2f);
+        // endUV = new Vector2((1f - endPos.x)/2f, (1f - endPos.z)/2f);
+
+        lineEnd.parent?.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
+        lineStart.parent = null;
+        lineEnd.parent = null;
         lineStart.position = Vector3.zero;
         lineEnd.position = Vector3.zero;
-        isDrawing = false;
-        lineEnd.parent.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
-        lineStart.parent = transform;
-        lineEnd.parent = transform;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -72,7 +78,8 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     }
 
-    public RaycastHit ShootRayAtPoint(Vector3 point){
+    public RaycastHit ShootRayAtPoint(Vector3 point)
+    {
         Ray ray = Camera.main.ScreenPointToRay(point);
         RaycastHit hit;
 
