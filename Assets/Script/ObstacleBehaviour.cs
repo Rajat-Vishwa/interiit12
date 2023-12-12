@@ -5,16 +5,20 @@ using UnityEngine;
 public class ObstacleBehaviour : MonoBehaviour
 {
     public float scrollSpeed = 0.8f;
+    public Vector3 spawnPos, endPos;
     public GameObject mainPlane;
 
     void Start()
     {
-        
+        spawnPos = transform.position;
     }
 
     void Update()
     {
-        transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);    
+        transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);
+        if(transform.position.z < endPos.z){
+            transform.position = spawnPos;
+        }
     }
 
     public void Slice(Vector2 startUV, Vector2 endUV)
