@@ -19,9 +19,9 @@ public class ObstacleBehaviour : MonoBehaviour
 
     public void Slice(Vector2 startUV, Vector2 endUV)
     {
-        Texture2D texture = mainPlane.GetComponent<Renderer>().material.GetTexture("_alphaTex") as Texture2D;
+        Texture2D texture = mainPlane.GetComponent<Renderer>().material.GetTexture("_AlphaTexture") as Texture2D;
         Texture2D newTexture = Symmetrize(texture, startUV, endUV);
-        mainPlane.GetComponent<Renderer>().material.SetTexture("_alphaTex", newTexture);
+        mainPlane.GetComponent<Renderer>().material.SetTexture("_MirrorTexture", newTexture);
     }
 
     public Texture2D Symmetrize(Texture2D texture, Vector2 startUV, Vector2 endUV)

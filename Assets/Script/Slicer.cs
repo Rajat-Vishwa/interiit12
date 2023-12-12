@@ -45,6 +45,7 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         lineStart.position = Vector3.zero;
         lineEnd.position = Vector3.zero;
         isDrawing = false;
+        lineEnd.parent.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
         lineStart.parent = transform;
         lineEnd.parent = transform;
     }
@@ -65,8 +66,6 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
                     endUV = hit.textureCoord; // Get the UV of the hit point
                     lineEnd.position = hit.point + offset;
                     lineEnd.parent = hit.transform.parent;
-
-                    hit.transform.parent.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
                 }
             }
         }
