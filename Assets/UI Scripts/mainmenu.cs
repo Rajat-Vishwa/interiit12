@@ -12,7 +12,7 @@ public class mainmenu : MonoBehaviour
     }
     public void Startgame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("WorldGeneration");
         Debug.Log("start game");
     }
     public void Credits()
