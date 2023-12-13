@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public Transform lineStart, lineEnd;
-    private bool isDrawing = false;
+    public bool isDrawing = false;
     public LineRenderer lineRenderer;
     public LayerMask slicableLayer;
     public Vector3 offset;
