@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class ObstacleBehaviour : MonoBehaviour
 {
-    public float scrollSpeed = 0.8f;
-    public Vector3 spawnPos, endPos;
+    private float scrollSpeed = 0.8f;
     public GameObject mainPlane;
 
     void Start()
     {
-        //spawnPos = transform.position;
+        scrollSpeed = LevelManager.instance.obstacleSpeed;
     }
 
     void Update()
     {
+        scrollSpeed = LevelManager.instance.obstacleSpeed;
         transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);
-        if(transform.localPosition.z < endPos.z){
-            transform.localPosition = spawnPos;
-        }
     }
 
     public void Slice(Vector2 startUV, Vector2 endUV)
@@ -40,7 +37,6 @@ public class ObstacleBehaviour : MonoBehaviour
         Vector2 lineDir = new Vector2(endX - startX, endY - startY).normalized;
         Vector2 lineNormal = new Vector2(-lineDir.y, lineDir.x);
 
-        // Create a new texture to store the symmetrized image 
         Texture2D newTexture = new Texture2D(texture.width, texture.height);
 
         // Iterate over each pixel in the texture
@@ -70,10 +66,8 @@ public class ObstacleBehaviour : MonoBehaviour
         }
         
 
-        // Apply the changes to the new texture
         newTexture.Apply();
 
-        // Replace the original texture with the new texture
         //mainPlane.GetComponent<Renderer>().material.SetTexture("_AlphaTexture", newTexture);
         mainPlane.GetComponent<Renderer>().material.SetTexture("_MirrorTexture", newTexture);
     }

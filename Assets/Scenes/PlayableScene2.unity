@@ -183,9 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc82227b2c327944b26a59afe307a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 6.4
-  spawnPos: {x: 0, y: 0, z: 20}
-  endPos: {x: 0, y: 0, z: -20}
   mainPlane: {fileID: 617151641}
 --- !u!4 &56277635
 Transform:
@@ -250,9 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc82227b2c327944b26a59afe307a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 6.4
-  spawnPos: {x: 0, y: 0, z: 20}
-  endPos: {x: 0, y: 0, z: -20}
   mainPlane: {fileID: 1823675913}
 --- !u!1 &327490750
 GameObject:
@@ -446,7 +440,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.08651455, y: -0.00000001714187, z: 0.0000000014886022, w: 0.9962506}
+  m_LocalRotation: {x: 0.08651455, y: 0.000000017141867, z: -0.0000000014886019, w: 0.9962506}
   m_LocalPosition: {x: 0, y: -0.5, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1026,7 +1020,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778366198}
-  m_LocalRotation: {x: 0.08651455, y: -0.00000001714187, z: 0.0000000014886022, w: 0.9962506}
+  m_LocalRotation: {x: 0.08651455, y: 0.000000017141867, z: -0.0000000014886019, w: 0.9962506}
   m_LocalPosition: {x: 0.15479966, y: 0.106805325, z: -3.6718526}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1272,6 +1266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineStart: {fileID: 22529777}
   lineEnd: {fileID: 1608756945}
+  isDrawing: 0
   lineRenderer: {fileID: 0}
   slicableLayer:
     serializedVersion: 2
@@ -1506,6 +1501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1305117311}
+  - component: {fileID: 1305117312}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1528,6 +1524,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1305117312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305117310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae41900f8fb61c948b0d9cda0661cbbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPos: {x: 0, y: 0, z: 20}
+  endPos: {x: 0, y: 0, z: -20}
+  obstacleSpeed: 6.4
+  ObstaclePrefab: {fileID: 0}
+  player: {fileID: 0}
+  obstacles: []
+  maxObstacles: 2
+  spawnCooldown: 1
 --- !u!1 &1531710806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,7 +2010,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0b9e08f66bdfc87448c47f12d81e1369, type: 2}
+  - {fileID: 2100000, guid: 19ec55a41473e43469e76325512d4730, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6331,6 +6347,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc2352c75c288f408b296c16d0a5fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animateShader: 1
+  obstacles:
+  - {fileID: 56277633}
+  - {fileID: 114403395}
+  platform: {fileID: 579191056}
 --- !u!1 &6378412638185886358
 GameObject:
   m_ObjectHideFlags: 0
