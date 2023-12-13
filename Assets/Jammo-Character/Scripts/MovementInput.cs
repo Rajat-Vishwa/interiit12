@@ -9,6 +9,8 @@ using UnityEngine;
 public class MovementInput : MonoBehaviour {
 
     public float Velocity;
+
+	public GameObject endMenu;
     [Space]
 
 	public float InputX;
@@ -59,6 +61,9 @@ public class MovementInput : MonoBehaviour {
         moveVector = new Vector3(0, verticalVel * .2f * Time.deltaTime, 0);
         controller.Move(moveVector);
 
+		if (Input.GetKeyDown(KeyCode.T)){
+            ShowEndMenu();
+        }
 
     }
 
@@ -121,4 +126,13 @@ public class MovementInput : MonoBehaviour {
 			anim.SetFloat ("Blend", Speed, StopAnimTime, Time.deltaTime);
 		}
 	}
+
+	void ShowEndMenu()
+    {
+        if (endMenu != null){
+            endMenu.SetActive(true);
+        }else{
+            Debug.LogWarning("End menu object is not assigned in the GameManager.");
+        }
+    }
 }

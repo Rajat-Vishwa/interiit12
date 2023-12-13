@@ -5,14 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlaneSegment
+  - PlayerEyes
+  - Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Slicable
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
