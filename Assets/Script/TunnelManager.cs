@@ -7,6 +7,7 @@ public class TunnelManager : MonoBehaviour
     public bool animateShader = true;
     public GameObject[] obstacles;
     public GameObject platform;
+    public Transform MirrorMount;
 
     private Material tunnelMaterial, platformMaterial;
     void Start()
@@ -19,6 +20,8 @@ public class TunnelManager : MonoBehaviour
     void Update()
     {
         UpdateShader();
+        MirrorMount.parent = LevelManager.instance.obstacles[0].transform;
+        MirrorMount.localPosition = Vector3.zero;
     }
 
     public void UpdateShader()

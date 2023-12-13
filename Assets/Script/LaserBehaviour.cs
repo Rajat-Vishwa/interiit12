@@ -31,13 +31,11 @@ public class LaserBehaviour : MonoBehaviour
 
         // Camera Switch
         if (Input.GetMouseButton(1)){
-            followCam.SetActive(false);
             shoulderCam.SetActive(true);
 
             Time.timeScale = Mathf.Lerp(Time.timeScale, timeSlowScale, timeDamp * Time.deltaTime);
         }
         else{
-            followCam.SetActive(true);
             shoulderCam.SetActive(false);
 
             Time.timeScale = Mathf.Lerp(Time.timeScale, timeNormalScale, timeDamp * Time.deltaTime);
