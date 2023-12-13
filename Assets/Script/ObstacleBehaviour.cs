@@ -59,6 +59,17 @@ public class ObstacleBehaviour : MonoBehaviour
                 
                 if (mirroredX >= 0 && mirroredX < texture.width && mirroredY >= 0 && mirroredY < texture.height){
                     newTexture.SetPixel(mirroredX, mirroredY, texture.GetPixel(x, y));
+
+                    // set Neighbouring pixels to the same color
+                    if(mirroredX > 0)
+                        newTexture.SetPixel(mirroredX - 1, mirroredY, texture.GetPixel(x, y));
+                    if(mirroredX < texture.width - 1)
+                        newTexture.SetPixel(mirroredX + 1, mirroredY, texture.GetPixel(x, y));
+                    if(mirroredY > 0)
+                        newTexture.SetPixel(mirroredX, mirroredY - 1, texture.GetPixel(x, y));
+                    if(mirroredY < texture.height - 1)
+                        newTexture.SetPixel(mirroredX, mirroredY + 1, texture.GetPixel(x, y));
+                    
                 }
             }
             if(y % 10 == 0)
