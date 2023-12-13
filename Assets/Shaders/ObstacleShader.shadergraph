@@ -1063,8 +1063,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1276.0,
-            "y": 678.4000244140625,
+            "x": -1258.400146484375,
+            "y": 723.2000122070313,
             "width": 155.199951171875,
             "height": 33.5999755859375
         }
@@ -2329,7 +2329,7 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     },
-    "m_BlendMode": 1
+    "m_BlendMode": 9
 }
 
 {
@@ -3335,7 +3335,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"dcb47cf777b029b4b96b3e0b576df73d\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
