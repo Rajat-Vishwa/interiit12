@@ -961,6 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: 10
+  endMenu: {fileID: 0}
   InputX: 0
   InputZ: 0
   desiredMoveDirection: {x: 0, y: 0, z: 0}
