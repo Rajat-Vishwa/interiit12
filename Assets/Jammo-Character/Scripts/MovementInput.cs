@@ -130,6 +130,7 @@ public class MovementInput : MonoBehaviour {
 	void ShowEndMenu()
     {
         if (endMenu != null){
+			Time.timeScale=0f;
             endMenu.SetActive(true);
         }else{
             Debug.LogWarning("End menu object is not assigned in the GameManager.");
