@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     public float obstacleSpeed = 6.4f;
     public GameObject ObstaclePrefab;
     public Transform player;
+    public Transform MirrorMount;
+
 
     public List<GameObject> obstacles = new();
     public int maxObstacles = 2;
@@ -34,8 +36,16 @@ public class LevelManager : MonoBehaviour
     {
         if(obstacles[0].transform.localPosition.z <= endPos.z){
             obstacles[0].transform.localPosition = spawnPos;
+
+            obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_MirrorTexture", Texture2D.whiteTexture);
+
+            // Move the obstacle to the end of the list
             obstacles.Add(obstacles[0]);
             obstacles.RemoveAt(0);
+
+            MirrorMount.parent = LevelManager.instance.obstacles[0].transform;
+            MirrorMount.localPosition = Vector3.zero;
+
         }
 
     }
