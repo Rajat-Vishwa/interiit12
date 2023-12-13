@@ -10,6 +10,8 @@ public class ScoreManager : MonoBehaviour
 
     public bool IsDead;
     public GameObject endMenu;
+
+    private float distanceTraveled = 0f;
     private static ScoreManager instance;
     public static ScoreManager Instance
     {
@@ -35,7 +37,11 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        highScore = Mathf.FloorToInt(Time.time * 50);
+        if (!IsDead)
+        {
+            distanceTraveled += Time.deltaTime * 50;
+            highScore = Mathf.FloorToInt(distanceTraveled);
+        }
         scoreText.text = "SCORE: " + highScore.ToString();
     }
 }

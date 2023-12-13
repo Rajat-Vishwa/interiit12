@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class HighScore : MonoBehaviour {
 
@@ -44,7 +45,10 @@ public class HighScore : MonoBehaviour {
         }
 
         highscoreEntryTransformList = new List<Transform>();
-        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList) {
+        int maxEntriesToShow = 6;
+
+        for (int i = 0; i < Mathf.Min(highscores.highscoreEntryList.Count, maxEntriesToShow); i++) {
+            HighscoreEntry highscoreEntry = highscores.highscoreEntryList[i];
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
         }
     }

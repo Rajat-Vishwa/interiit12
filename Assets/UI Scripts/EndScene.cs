@@ -27,11 +27,13 @@ public class EndScene : MonoBehaviour
             playerName = playerName.Substring(0, Math.Min(maxNameLength, 6)) + "..";
         }
         HighscoreTable.AddHighscoreEntry(pscore, playerName);
+        Debug.Log("Saved");
     }
     public void Replay()
     {
         Time.timeScale=1f;
         endMenu.SetActive(false);
         SceneManager.LoadScene("WorldGeneration");
+        Debug.Log("Restart");
     }
 }

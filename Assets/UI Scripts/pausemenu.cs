@@ -45,5 +45,6 @@ public class pausemenu : MonoBehaviour
     {
         Time.timeScale=1f;
         Application.Quit();
+        Debug.Log("Quit");
     }
 }
