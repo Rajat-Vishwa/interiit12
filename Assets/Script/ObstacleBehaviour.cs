@@ -10,14 +10,14 @@ public class ObstacleBehaviour : MonoBehaviour
 
     void Start()
     {
-        spawnPos = transform.position;
+        //spawnPos = transform.position;
     }
 
     void Update()
     {
         transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);
-        if(transform.position.z < endPos.z){
-            transform.position = spawnPos;
+        if(transform.localPosition.z < endPos.z){
+            transform.localPosition = spawnPos;
         }
     }
 
