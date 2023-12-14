@@ -14,7 +14,6 @@ public class LevelManager : MonoBehaviour
 
     public List<GameObject> obstacles = new();
     public int maxObstacles = 2;
-    public float spawnCooldown = 1f;
     
     public int currentLevel = 0;
     public Texture2D[] levelTextures;
@@ -44,11 +43,17 @@ public class LevelManager : MonoBehaviour
             obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_AlphaTexture", levelTextures[currentLevel]);
             obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_MirrorTexture", Texture2D.whiteTexture);
 
+            obstacles[0].GetComponentInChildren<Renderer>().material.SetFloat("_GlowEnabled", 0f);
+
             // Move the obstacle to the end of the list
             obstacles.Add(obstacles[0]);
             obstacles.RemoveAt(0);
+            obstacles[0].GetComponentInChildren<Renderer>().material.SetFloat("_GlowEnabled", 1f);
 
-            MirrorMount.parent = LevelManager.instance.obstacles[0].transform;
+            player.GetComponent<CollisionDetector>().hasCheckedCollision = false;
+            player.GetComponent<CollisionDetector>().hasHit = false;
+
+            MirrorMount.parent = obstacles[0].transform;
             MirrorMount.localPosition = Vector3.zero;
 
         }
