@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class mainmenu : MonoBehaviour
 {
+
     public void Quit()
     {
         Debug.Log("Quit");
@@ -12,17 +13,17 @@ public class mainmenu : MonoBehaviour
     }
     public void Startgame()
     {
-        SceneManager.LoadScene("PlayableScene");
+        SceneManager.LoadScene("MainScene");
         Debug.Log("start game");
     }
     public void BACK()
     {
-        SceneManager.LoadScene("TestLeaderBoard");
+        SceneManager.LoadScene("MainMenu");
         Debug.Log("back");
     }
     public void Credits()
     {
-        SceneManager.LoadScene("credits");
+        SceneManager.LoadScene("Credits");
         Debug.Log("credits");
     }
 }

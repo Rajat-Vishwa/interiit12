@@ -11,8 +11,6 @@ public class pausemenu : MonoBehaviour
 
     public GameObject otherGameObject;
   
-
-
     private GameObject playerinstance;
     void Start(){
         audioSourceoff = otherGameObject.GetComponent<AudioSource>();
@@ -35,8 +33,6 @@ public class pausemenu : MonoBehaviour
         Time.timeScale=0f;
         isPaused=true;
         audioSourceoff.Stop();
-
-
     }
 
     public void ResumeGame(){
@@ -45,6 +41,7 @@ public class pausemenu : MonoBehaviour
         isPaused=false;
         audioSourceoff.Play();
     }
+
     public void RestartGame()
     {
         pauseMenu.SetActive(false);
@@ -58,7 +55,7 @@ public class pausemenu : MonoBehaviour
     {
         Time.timeScale=1f;
         isPaused = false;
-        SceneManager.LoadScene("TestLeaderBoard");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()
