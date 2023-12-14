@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class ObstacleBehaviour : MonoBehaviour
 {
@@ -78,6 +79,10 @@ public class ObstacleBehaviour : MonoBehaviour
         
 
         newTexture.Apply();
+
+        // Save the new texture on to textures folder (just for debugging)
+        byte[] bytes = newTexture.EncodeToPNG();
+        File.WriteAllBytes(Application.dataPath + "/Textures/texture.png", bytes);
 
         //mainPlane.GetComponent<Renderer>().material.SetTexture("_AlphaTexture", newTexture);
         mainPlane.GetComponent<Renderer>().material.SetTexture("_MirrorTexture", newTexture);
