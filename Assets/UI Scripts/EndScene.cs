@@ -29,11 +29,12 @@ public class EndScene : MonoBehaviour
         HighscoreTable.AddHighscoreEntry(pscore, playerName);
         Debug.Log("Saved");
     }
+
     public void Replay()
     {
         Time.timeScale=1f;
         endMenu.SetActive(false);
-        SceneManager.LoadScene("WorldGeneration");
+        SceneManager.LoadScene("MainScene");
         Debug.Log("Restart");
     }
 }

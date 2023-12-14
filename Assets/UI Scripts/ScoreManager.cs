@@ -32,7 +32,7 @@ public class ScoreManager : MonoBehaviour
     {
         highScore = 0;
         IsDead = false;
-    }
+    } 
 
     // Update is called once per frame
     void Update()
@@ -42,6 +42,6 @@ public class ScoreManager : MonoBehaviour
             distanceTraveled += Time.deltaTime * 50;
             highScore = Mathf.FloorToInt(distanceTraveled);
         }
-        scoreText.text = "SCORE: " + highScore.ToString();
+        scoreText.text = "Score: " + highScore.ToString();
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public float minSqrDist = 0.1f;
+    public float minDist = 5f;
     public Transform bl, br, tl, tr; // bottom left, bottom right, top left, top right
     public Vector2 blUV, trUV;
     public LayerMask slicable;
@@ -22,10 +22,11 @@ public class CollisionDetector : MonoBehaviour
     {
         currentObstacle = LevelManager.instance.obstacles[0];
 
-        float sqrDist = Vector3.SqrMagnitude(transform.position - currentObstacle.transform.position);
-        Debug.Log("Distance: " + sqrDist);
+        float dist = Mathf.Abs(transform.position.z - currentObstacle.transform.position.z);
+        Debug.Log("Distance: " + dist);
 
-        if (sqrDist <= minSqrDist && !hasCheckedCollision){
+        if (dist <= minDist && !hasCheckedCollision)
+        {
             CheckCollision();
             hasCheckedCollision = true;
         }
@@ -110,4 +111,11 @@ public class CollisionDetector : MonoBehaviour
     {
         return (uv - Vector2.one * 0.25f) * 2f;
     }
+
+    private void GameOverSequence()
+    {
+        Debug.Log("Game Over");
+        
+    }
+
 }
