@@ -4,17 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class pausemenu : MonoBehaviour
 {
-     public GameObject pauseMenu;
-
+    public GameObject pauseMenu;
     public static bool isPaused;
-    private AudioSource audioSourceoff;
-
-    public GameObject otherGameObject;
-  
+    public GameObject[] audioSources;
+    
     private GameObject playerinstance;
+    
     void Start(){
-        audioSourceoff = otherGameObject.GetComponent<AudioSource>();
-       
+        playerinstance = GameObject.Find("Player");
         pauseMenu.SetActive(false);
     }
 
@@ -29,17 +26,31 @@ public class pausemenu : MonoBehaviour
     }
 
     public void PauseGame(){
+
+        playerinstance.GetComponent<PlayerController>().enabled=false;
+        playerinstance.GetComponentInChildren<LaserBehaviour>().enabled=false;
+
         pauseMenu.SetActive(true);
         Time.timeScale=0f;
         isPaused=true;
-        audioSourceoff.Stop();
+        
+        foreach(GameObject audioSource in audioSources){
+            audioSource.SetActive(false);
+        }
     }
 
     public void ResumeGame(){
+
+        playerinstance.GetComponent<PlayerController>().enabled=true;
+        playerinstance.GetComponentInChildren<LaserBehaviour>().enabled=true;
+
         pauseMenu.SetActive(false);
         Time.timeScale=1f;
         isPaused=false;
-        audioSourceoff.Play();
+        
+        foreach(GameObject audioSource in audioSources){
+            audioSource.SetActive(true);
+        }
     }
 
     public void RestartGame()

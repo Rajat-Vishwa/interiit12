@@ -10,7 +10,6 @@ public class ObstacleBehaviour : MonoBehaviour
 
     void Start()
     {
-        scrollSpeed = LevelManager.instance.obstacleSpeed;
     }
 
     void Update()
