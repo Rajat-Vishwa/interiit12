@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
     public Vector3 spawnPos = new Vector3(0f, 0f, 0f);
     public Vector3 endPos = new Vector3(0f, 0f, 0f);
     public float obstacleSpeed = 6.4f;
+    public float rotateSpeed = 0f;
+    public float rotateSpeedIncrement = 0.5f;
 
     [Space]
     public GameObject ObstaclePrefab;
@@ -20,6 +22,8 @@ public class LevelManager : MonoBehaviour
     public int maxObstacles = 2;
     
     [Space]
+    public int difficulty = 1;
+    public float difficultySpeedIncrement = 0.5f;
     public int currentLevel = 0;
     public Texture2D[] levelTextures;
 
@@ -40,6 +44,8 @@ public class LevelManager : MonoBehaviour
         }
         gameOver = false;   
         player = GameObject.Find("Player").transform;
+
+        difficultySpeedIncrement = obstacleSpeed / 4f;
     }
 
     void Update()
@@ -49,10 +55,17 @@ public class LevelManager : MonoBehaviour
         // Manage the obstacles
         if(obstacles[0].transform.localPosition.z <= endPos.z){
 
-            currentLevel = Random.Range(0, levelTextures.Length);
+            currentLevel++;
+            if(currentLevel % 5 == 0){
+                difficulty++;
+                if(difficulty <= 10) obstacleSpeed += difficultySpeedIncrement;
+            }
+            if(difficulty % 5 == 0) rotateSpeed += rotateSpeedIncrement;
+
+            int randLevel = Random.Range(0, levelTextures.Length);
 
             obstacles[0].transform.localPosition = spawnPos;
-            obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_AlphaTexture", levelTextures[currentLevel]);
+            obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_AlphaTexture", levelTextures[randLevel]);
             obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_MirrorTexture", Texture2D.whiteTexture);
 
             obstacles[0].GetComponentInChildren<Renderer>().material.SetFloat("_GlowEnabled", 0f);

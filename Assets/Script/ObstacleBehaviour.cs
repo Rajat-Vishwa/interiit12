@@ -6,6 +6,7 @@ using System.IO;
 public class ObstacleBehaviour : MonoBehaviour
 {
     private float scrollSpeed = 0.8f;
+    private float rotateSpeed = 0.8f;
     public GameObject mainPlane;
 
     void Start()
@@ -14,8 +15,10 @@ public class ObstacleBehaviour : MonoBehaviour
 
     void Update()
     {
+        rotateSpeed = LevelManager.instance.rotateSpeed;
         scrollSpeed = LevelManager.instance.obstacleSpeed;
         transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
     }
 
     public void Slice(Vector2 startUV, Vector2 endUV)
