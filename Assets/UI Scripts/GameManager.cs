@@ -24,11 +24,12 @@ public class GameManager : MonoBehaviour
 
     public void restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void MM()
     {
-        SceneManager.LoadScene("startmenu");
+        SceneManager.LoadScene("TestLeaderBoard");
 
     }
 }

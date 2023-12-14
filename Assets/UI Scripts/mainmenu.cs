@@ -12,8 +12,13 @@ public class mainmenu : MonoBehaviour
     }
     public void Startgame()
     {
-        SceneManager.LoadScene("WorldGeneration");
+        SceneManager.LoadScene("PlayableScene");
         Debug.Log("start game");
+    }
+    public void BACK()
+    {
+        SceneManager.LoadScene("TestLeaderBoard");
+        Debug.Log("back");
     }
     public void Credits()
     {
