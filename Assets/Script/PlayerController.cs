@@ -47,12 +47,12 @@ public class PlayerController : MonoBehaviour
 			verticalVelocity += gravity * Time.deltaTime; // apply gravity on y-axis
 		}
 
-		if (Input.GetButtonDown("Jump") && !isJumping){
-			anim.SetTrigger("Jump");
-			verticalVelocity = jumpForce; // Apply the jump force
-			isJumping = true;
-		}
-		controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime); // Apply vertical velocity to the character
+		// if (Input.GetButtonDown("Jump") && !isJumping){
+		// 	anim.SetTrigger("Jump");
+		// 	verticalVelocity = jumpForce; // Apply the jump force
+		// 	isJumping = true;
+		// }
+		// controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime); // Apply vertical velocity to the character
         
         // Clamp X position 
         var pos = transform.position;
