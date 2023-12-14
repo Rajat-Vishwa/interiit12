@@ -8,12 +8,15 @@ public class pausemenu : MonoBehaviour
 
     public static bool isPaused;
     private AudioSource audioSourceoff;
+
     public GameObject otherGameObject;
-    
+  
+
 
     private GameObject playerinstance;
     void Start(){
         audioSourceoff = otherGameObject.GetComponent<AudioSource>();
+       
         pauseMenu.SetActive(false);
     }
 
@@ -42,10 +45,19 @@ public class pausemenu : MonoBehaviour
         isPaused=false;
         audioSourceoff.Play();
     }
+    public void RestartGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+       
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void BackToMenu()
     {
         Time.timeScale=1f;
+        isPaused = false;
         SceneManager.LoadScene("TestLeaderBoard");
     }
 
@@ -53,5 +65,7 @@ public class pausemenu : MonoBehaviour
     {
         Time.timeScale=1f;
         Application.Quit();
+        isPaused = false;
+        Debug.Log("quit");
     }
 }
