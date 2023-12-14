@@ -8,6 +8,7 @@ public class GameOverHandler : MonoBehaviour
     public GameObject endMenu;
     public GameObject player;
     public pausemenu pauseManager;
+    public GameObject Sounds;
 
     public void GameOver()
     {
@@ -15,6 +16,7 @@ public class GameOverHandler : MonoBehaviour
         endMenu.SetActive(true);
         endMenu.GetComponentInChildren<TMP_Text>().text = "Score : " + LevelManager.instance.Score.ToString();
         player.SetActive(false);
+        Sounds.SetActive(false);
         pauseManager.enabled = false;
     }
 }
