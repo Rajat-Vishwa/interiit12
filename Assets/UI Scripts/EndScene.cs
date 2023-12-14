@@ -21,10 +21,10 @@ public class EndScene : MonoBehaviour
     {
         int pscore = ScoreManager.highScore;
         string playerName = nameInput.text.Trim();
-        const int maxNameLength = 4;
+        const int maxNameLength = 8;
         if (playerName.Length > maxNameLength)
         {
-            playerName = playerName.Substring(0, Math.Min(maxNameLength, 6)) + "..";
+            playerName = playerName.Substring(0, Math.Min(maxNameLength, 8)) + "..";
         }
         HighscoreTable.AddHighscoreEntry(pscore, playerName);
         Debug.Log("Saved");

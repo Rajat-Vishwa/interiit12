@@ -26,4 +26,9 @@ public class mainmenu : MonoBehaviour
         SceneManager.LoadScene("Credits");
         Debug.Log("credits");
     }
+    public void LeaderBoard()
+    {
+        SceneManager.LoadScene("LeaderBoard");
+        Debug.Log("LeaderBoard");
+    }
 }
