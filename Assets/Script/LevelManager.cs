@@ -15,7 +15,9 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> obstacles = new();
     public int maxObstacles = 2;
     public float spawnCooldown = 1f;
-    private float spawnTimer = 0f;
+    
+    public int currentLevel = 0;
+    public Texture2D[] levelTextures;
 
     public static LevelManager instance;
 
@@ -35,8 +37,11 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if(obstacles[0].transform.localPosition.z <= endPos.z){
-            obstacles[0].transform.localPosition = spawnPos;
 
+            currentLevel = Random.Range(0, levelTextures.Length);
+
+            obstacles[0].transform.localPosition = spawnPos;
+            obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_AlphaTexture", levelTextures[currentLevel]);
             obstacles[0].GetComponentInChildren<Renderer>().material.SetTexture("_MirrorTexture", Texture2D.whiteTexture);
 
             // Move the obstacle to the end of the list
