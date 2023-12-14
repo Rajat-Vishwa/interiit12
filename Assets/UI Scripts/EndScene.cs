@@ -8,14 +8,9 @@ using System;
 public class EndScene : MonoBehaviour
 {
     public TMP_InputField nameInput;
-    [SerializeField]GameObject scorecard;
     public GameObject endMenu;
 
     public  TMP_Text ScoreText;
-
-    public void Update(){
-        ScoreText.text=ScoreManager.highScore.ToString();
-    }
 
     public void SaveName()
     {

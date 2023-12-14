@@ -29,6 +29,10 @@ public class CollisionDetector : MonoBehaviour
         {
             CheckCollision();
             hasCheckedCollision = true;
+
+            if(!hasHit){
+                LevelManager.instance.Score += LevelManager.instance.ScoreIncrement;
+            }
         }
     }
 
@@ -95,7 +99,8 @@ public class CollisionDetector : MonoBehaviour
                 if (inAlpha && inMirror){
                     Debug.Log("Hit");
                     hasHit = true;
-                    break;
+                    GameOverSequence();
+                    return;
                 }
 
             }
@@ -115,7 +120,9 @@ public class CollisionDetector : MonoBehaviour
     private void GameOverSequence()
     {
         Debug.Log("Game Over");
-        
+        LevelManager.instance.gameOver = true;
+        LevelManager.instance.ScoreText.gameObject.SetActive(false);
+        LevelManager.instance.gameObject.GetComponent<GameOverHandler>().GameOver();
     }
 
 }

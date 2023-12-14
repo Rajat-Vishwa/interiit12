@@ -1,40 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
     public Vector3 spawnPos = new Vector3(0f, 0f, 0f);
     public Vector3 endPos = new Vector3(0f, 0f, 0f);
     public float obstacleSpeed = 6.4f;
+
+    [Space]
     public GameObject ObstaclePrefab;
     public Transform player;
     public Transform MirrorMount;
+    public  TMP_Text ScoreText;
 
-
+    [Space]
     public List<GameObject> obstacles = new();
     public int maxObstacles = 2;
     
+    [Space]
     public int currentLevel = 0;
     public Texture2D[] levelTextures;
 
     public static LevelManager instance;
 
+    [Space]
+    public int Score = 0;
+    public int ScoreIncrement = 100;
+    public bool gameOver = false;
+
     void Start()
     {
         if(instance == null){
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else{
             Destroy(gameObject);
         }
-
+        gameOver = false;   
         player = GameObject.Find("Player").transform;
     }
 
     void Update()
     {
+        ScoreText.text = "Score : " + Score.ToString();
+
+        // Manage the obstacles
         if(obstacles[0].transform.localPosition.z <= endPos.z){
 
             currentLevel = Random.Range(0, levelTextures.Length);
