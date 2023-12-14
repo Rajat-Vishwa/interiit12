@@ -71,7 +71,7 @@ Material:
     - _texScale: 1
     - _vertextDisplacementIntensity: 10
     m_Colors:
-    - _ScrollSpeed: {r: 0.05, g: 0.005, b: 0, a: 0}
+    - _ScrollSpeed: {r: 0.0005, g: 0.005, b: 0, a: 0}
     - _effectColor: {r: 0.47727355, g: 0.2091601, b: 2.9960787, a: 0}
     - _noiseSpeed: {r: 0.005, g: 0.08, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -7,9 +7,13 @@ public class pausemenu : MonoBehaviour
      public GameObject pauseMenu;
 
     public static bool isPaused;
+    private AudioSource audioSourceoff;
+    public GameObject otherGameObject;
     
+
     private GameObject playerinstance;
     void Start(){
+        audioSourceoff = otherGameObject.GetComponent<AudioSource>();
         pauseMenu.SetActive(false);
     }
 
@@ -27,12 +31,16 @@ public class pausemenu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale=0f;
         isPaused=true;
+        audioSourceoff.Stop();
+
+
     }
 
     public void ResumeGame(){
         pauseMenu.SetActive(false);
         Time.timeScale=1f;
         isPaused=false;
+        audioSourceoff.Play();
     }
 
     public void BackToMenu()
