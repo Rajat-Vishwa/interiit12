@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class HighScore : MonoBehaviour {
 
@@ -23,34 +22,28 @@ public class HighScore : MonoBehaviour {
         string jsonString = PlayerPrefs.GetString("HighScoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-        if (highscores == null) {
-            // There's no stored table, initialize
+        if (highscores == null || (highscores.highscoreEntryList != null && highscores.highscoreEntryList.Count == 0)) {
+            // There's no stored table or the list is empty, initialize
             Debug.Log("Initializing table with default values...");
+            highscores = new Highscores() {
+                highscoreEntryList = new List<HighscoreEntry>()
+            };
             AddHighscoreEntry(pscore, pname);
             // Reload
             jsonString = PlayerPrefs.GetString("HighScoreTable");
             highscores = JsonUtility.FromJson<Highscores>(jsonString);
         }
 
+
+
         // Sort entry list by Score
-        for (int i = 0; i < highscores.highscoreEntryList.Count; i++) {
-            for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++) {
-                if (highscores.highscoreEntryList[j].score > highscores.highscoreEntryList[i].score) {
-                    // Swap
-                    HighscoreEntry tmp = highscores.highscoreEntryList[i];
-                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
-                    highscores.highscoreEntryList[j] = tmp;
-                }
-            }
-        }
+        highscores.highscoreEntryList.Sort((x, y) => y.score.CompareTo(x.score));
 
         highscoreEntryTransformList = new List<Transform>();
-        int maxEntriesToShow = 6;
+        int maxEntriesToShow = Mathf.Min(highscores.highscoreEntryList.Count, 4);  // Show at most 4 entries
 
-        for (int i = 1; i < Mathf.Min(highscores.highscoreEntryList.Count, maxEntriesToShow); i++) {
-            Debug.Log(i);
-            HighscoreEntry highscoreEntry = highscores.highscoreEntryList[i];
-            CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+        for (int i = 0; i < maxEntriesToShow; i++) {
+            CreateHighscoreEntryTransform(highscores.highscoreEntryList[i], entryContainer, highscoreEntryTransformList);
         }
     }
 
@@ -58,7 +51,7 @@ public class HighScore : MonoBehaviour {
         float templateHeight = 40f;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-        entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * (transformList.Count+1));
         entryTransform.gameObject.SetActive(true);
 
         int rank = transformList.Count + 1;
@@ -105,9 +98,10 @@ public class HighScore : MonoBehaviour {
         if (highscores == null) {
             // There's no stored table, initialize
             highscores = new Highscores() {
-                highscoreEntryList = new List<HighscoreEntry>()
+                highscoreEntryList = new List<HighscoreEntry>()  // Initialize the list here
             };
         }
+
 
         // Add new entry to Highscores
         highscores.highscoreEntryList.Add(highscoreEntry);
@@ -129,7 +123,3 @@ public class HighScore : MonoBehaviour {
     }
 
 }
-
-
-
-
