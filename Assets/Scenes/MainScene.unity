@@ -12145,19 +12145,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007609d40d489274f9843d9ab3038acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDist: 1.5
   bl: {fileID: 459007637}
-  br: {fileID: 326734872}
-  tl: {fileID: 641129073}
   tr: {fileID: 1856537825}
-  blUV: {x: 0, y: 0}
-  trUV: {x: 0, y: 0}
   slicable:
     serializedVersion: 2
     m_Bits: 8
-  currentObstacle: {fileID: 0}
-  hasHit: 0
   hasCheckedCollision: 0
+  hasHit: 0
+  minDist: 1.5
 --- !u!4 &8824088411041868060
 Transform:
   m_ObjectHideFlags: 0

@@ -1,15 +1,17 @@
+using System.Threading.Tasks;
 using UnityEngine;
-using System.Collections;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public float minDist = 5f;
-    public Transform bl, br, tl, tr; // bottom left, bottom right, top left, top right
-    public Vector2 blUV, trUV;
+    public Transform bl;
+    public Transform tr;
     public LayerMask slicable;
-    public GameObject currentObstacle;
-    public bool hasHit = false;
-    public bool hasCheckedCollision = false;
+    private Vector2 blUV;
+    private Vector2 trUV;
+    public bool hasCheckedCollision;
+    public bool hasHit;
+    private GameObject currentObstacle;
+    public float minDist;
 
     void Start()
     {
@@ -18,26 +20,25 @@ public class CollisionDetector : MonoBehaviour
         hasHit = false;
     }
 
-
-    void Update()
+    private void Update()
     {
         currentObstacle = LevelManager.instance.obstacles[0];
-
-        float dist = Mathf.Abs(transform.position.z - currentObstacle.transform.position.z);
+        float dist = currentObstacle.transform.position.z - transform.position.z;
         //Debug.Log("Distance: " + dist);
 
         if (dist <= minDist && !hasCheckedCollision)
         {
-           StartCoroutine(CheckCollisionCoroutine());
+            CheckCollisionAsync();
             hasCheckedCollision = true;
 
-            if(!hasHit){
+            if (!hasHit)
+            {
                 LevelManager.instance.Score += LevelManager.instance.ScoreIncrement;
             }
         }
     }
 
-    IEnumerator CheckCollisionCoroutine()
+    private async void CheckCollisionAsync()
     {
         // Shoot rays from each corner in the forward direction and check if they hit the obstacle and get the UV coordinates
         RaycastHit hit;
@@ -54,7 +55,7 @@ public class CollisionDetector : MonoBehaviour
         if (blUV == Vector2.zero || trUV == Vector2.zero)
         {
             hasCheckedCollision = false;
-            yield break;
+            return;
         }
 
         // Recalculate UV Coordinates for drawing plane scale 2 times main plane
@@ -67,61 +68,72 @@ public class CollisionDetector : MonoBehaviour
         Texture2D alphaTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_AlphaTexture") as Texture2D;
         Texture2D mirrorTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_MirrorTexture") as Texture2D;
 
-        // Get the pixel coordinates of the UV coordinates
-        Vector2Int blPixel = new Vector2Int((int)(blUV.x * alphaTex.width), (int)(blUV.y * alphaTex.height));
-        Vector2Int trPixel = new Vector2Int((int)(trUV.x * alphaTex.width), (int)(trUV.y * alphaTex.height));
+        // Get texture properties on the main thread
+        int alphaTexWidth = alphaTex.width;
+        int alphaTexHeight = alphaTex.height;
+        Color[] alphaTexPixels = alphaTex.GetPixels();
 
-        bool inMirror = true;
-        bool inAlpha = false;
+        Color[] mirrorTexPixels = mirrorTex == null ? new Color[0] : mirrorTex.GetPixels();
 
-        for (int i = trPixel.x + 1; i < blPixel.x - 1; i++)
+        // Check for collision
+        hasHit = await Task.Run(() => CheckForHit(alphaTexPixels, mirrorTexPixels, alphaTexWidth, alphaTexHeight, blUV, trUV));
+
+        if (hasHit)
         {
-            for (int j = trPixel.y + 1; j < blPixel.y - 1; j++)
-            {
-                if (alphaTex != null)
-                    inAlpha = (alphaTex.GetPixel(i, j) == Color.white &&
-                                alphaTex.GetPixel(i + 1, j) == Color.white &&
-                                alphaTex.GetPixel(i - 1, j) == Color.white &&
-                                alphaTex.GetPixel(i, j + 1) == Color.white &&
-                                alphaTex.GetPixel(i, j - 1) == Color.white &&
-                                alphaTex.GetPixel(i + 1, j + 1) == Color.white &&
-                                alphaTex.GetPixel(i - 1, j - 1) == Color.white &&
-                                alphaTex.GetPixel(i + 1, j - 1) == Color.white &&
-                                alphaTex.GetPixel(i - 1, j + 1) == Color.white);
-
-                if (mirrorTex != null)
-                    inMirror = (mirrorTex.GetPixel(i, j) == Color.white &&
-                                mirrorTex.GetPixel(i + 1, j) == Color.white &&
-                                mirrorTex.GetPixel(i - 1, j) == Color.white &&
-                                mirrorTex.GetPixel(i, j + 1) == Color.white &&
-                                mirrorTex.GetPixel(i, j - 1) == Color.white &&
-                                mirrorTex.GetPixel(i + 1, j + 1) == Color.white &&
-                                mirrorTex.GetPixel(i - 1, j - 1) == Color.white &&
-                                mirrorTex.GetPixel(i + 1, j - 1) == Color.white &&
-                                mirrorTex.GetPixel(i - 1, j + 1) == Color.white);
-
-                // set hasHit to true if all 9 pixels are white
-                if (inAlpha && inMirror)
-                {
-                    Debug.Log("Hit");
-                    hasHit = true;
-                    GameOverSequence();
-                    yield break;
-                }
-            }
-            if(i % 100 == 0)
-                yield return null;
-
-            if (hasHit)
-            {
-                yield break;
-            }
+            GameOverSequence();
         }
     }
 
     private Vector2 RecalculateUV(Vector2 uv)
     {
         return (uv - Vector2.one * 0.25f) * 2f;
+    }
+
+    private bool CheckForHit(Color[] alphaTexPixels, Color[] mirrorTexPixels, int texWidth, int texHeight, Vector2 blUV, Vector2 trUV)
+    {
+        Vector2Int blPixel = new Vector2Int((int)(blUV.x * texWidth), (int)(blUV.y * texHeight));
+        Vector2Int trPixel = new Vector2Int((int)(trUV.x * texWidth), (int)(trUV.y * texHeight));
+
+        bool inMirror = true;
+        bool inAlpha = false;
+        for (int j = trPixel.y + 1; j < blPixel.y - 1; j++)
+        {
+            for (int i = trPixel.x + 1; i < blPixel.x - 1; i++)
+            {
+                int pixelIndex = i + j * texWidth;
+
+                inAlpha = (alphaTexPixels[pixelIndex] == Color.white &&
+                            alphaTexPixels[pixelIndex + 1] == Color.white &&
+                            alphaTexPixels[pixelIndex - 1] == Color.white &&
+                            alphaTexPixels[pixelIndex + texWidth] == Color.white &&
+                            alphaTexPixels[pixelIndex - texWidth] == Color.white &&
+                            alphaTexPixels[pixelIndex + texWidth + 1] == Color.white &&
+                            alphaTexPixels[pixelIndex - texWidth - 1] == Color.white &&
+                            alphaTexPixels[pixelIndex + texWidth - 1] == Color.white &&
+                            alphaTexPixels[pixelIndex - texWidth + 1] == Color.white);
+
+                if (mirrorTexPixels.Length != 0)
+                {
+                    inMirror = (mirrorTexPixels[pixelIndex] == Color.white &&
+                                mirrorTexPixels[pixelIndex + 1] == Color.white &&
+                                mirrorTexPixels[pixelIndex - 1] == Color.white &&
+                                mirrorTexPixels[pixelIndex + texWidth] == Color.white &&
+                                mirrorTexPixels[pixelIndex - texWidth] == Color.white &&
+                                mirrorTexPixels[pixelIndex + texWidth + 1] == Color.white &&
+                                mirrorTexPixels[pixelIndex - texWidth - 1] == Color.white &&
+                                mirrorTexPixels[pixelIndex + texWidth - 1] == Color.white &&
+                                mirrorTexPixels[pixelIndex - texWidth + 1] == Color.white);
+                }
+
+                if (inAlpha && inMirror)
+                {
+                    Debug.Log("Hit");
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void GameOverSequence()
