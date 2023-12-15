@@ -14,13 +14,20 @@ public class EndScene : MonoBehaviour
 
     public void SaveName()
     {
-        int pscore = ScoreManager.highScore;
+        int pscore = LevelManager.instance.Score;
         string playerName = nameInput.text.Trim();
         const int maxNameLength = 8;
+
+        if(playerName == "ENTER PLAYER NAME" || playerName == "")
+        {
+            playerName = "Player";
+        }
+
         if (playerName.Length > maxNameLength)
         {
             playerName = playerName.Substring(0, Math.Min(maxNameLength, 8)) + "..";
         }
+        
         HighscoreTable.AddHighscoreEntry(pscore, playerName);
         Debug.Log("Saved");
     }

@@ -123,4 +123,5 @@ public class HighscoreTable : MonoBehaviour {
         public string name;
     }
 
+
 }

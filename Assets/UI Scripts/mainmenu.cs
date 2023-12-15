@@ -31,4 +31,11 @@ public class mainmenu : MonoBehaviour
         SceneManager.LoadScene("LeaderBoard");
         Debug.Log("LeaderBoard");
     }
+
+    public void ClearHighScore()
+    {
+        PlayerPrefs.DeleteKey("HighScoreTable");
+        SceneManager.LoadScene("LeaderBoard");
+        Debug.Log("High Score Cleared");
+    }
 }

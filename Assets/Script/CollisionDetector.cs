@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CollisionDetector : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class CollisionDetector : MonoBehaviour
 
         if (dist <= minDist && !hasCheckedCollision)
         {
-            CheckCollision();
+           StartCoroutine(CheckCollisionCoroutine());
             hasCheckedCollision = true;
 
             if(!hasHit){
@@ -36,21 +37,24 @@ public class CollisionDetector : MonoBehaviour
         }
     }
 
-    public void CheckCollision()
+    IEnumerator CheckCollisionCoroutine()
     {
         // Shoot rays from each corner in the forward direction and check if they hit the obstacle and get the UV coordinates
         RaycastHit hit;
-        if (Physics.Raycast(bl.position, transform.forward, out hit, 100f, slicable)){
+        if (Physics.Raycast(bl.position, transform.forward, out hit, 100f, slicable))
+        {
             blUV = hit.textureCoord;
         }
-        if(Physics.Raycast(tr.position, transform.forward, out hit, 100f, slicable)){
+        if (Physics.Raycast(tr.position, transform.forward, out hit, 100f, slicable))
+        {
             trUV = hit.textureCoord;
         }
 
         // If any of the UV coordinates are not set return from the function
-        if(blUV == Vector2.zero ||  trUV == Vector2.zero){
+        if (blUV == Vector2.zero || trUV == Vector2.zero)
+        {
             hasCheckedCollision = false;
-            return;
+            yield break;
         }
 
         // Recalculate UV Coordinates for drawing plane scale 2 times main plane
@@ -70,46 +74,49 @@ public class CollisionDetector : MonoBehaviour
         bool inMirror = true;
         bool inAlpha = false;
 
-        for(int i = trPixel.x+1; i < blPixel.x-1; i++){
-            for(int j = trPixel.y+1; j < blPixel.y-1; j++){
+        for (int i = trPixel.x + 1; i < blPixel.x - 1; i++)
+        {
+            for (int j = trPixel.y + 1; j < blPixel.y - 1; j++)
+            {
+                if (alphaTex != null)
+                    inAlpha = (alphaTex.GetPixel(i, j) == Color.white &&
+                                alphaTex.GetPixel(i + 1, j) == Color.white &&
+                                alphaTex.GetPixel(i - 1, j) == Color.white &&
+                                alphaTex.GetPixel(i, j + 1) == Color.white &&
+                                alphaTex.GetPixel(i, j - 1) == Color.white &&
+                                alphaTex.GetPixel(i + 1, j + 1) == Color.white &&
+                                alphaTex.GetPixel(i - 1, j - 1) == Color.white &&
+                                alphaTex.GetPixel(i + 1, j - 1) == Color.white &&
+                                alphaTex.GetPixel(i - 1, j + 1) == Color.white);
 
-                if(alphaTex != null)
-                    inAlpha = (alphaTex.GetPixel(i, j) == Color.white && 
-                                    alphaTex.GetPixel(i+1, j) == Color.white && 
-                                    alphaTex.GetPixel(i-1, j) == Color.white && 
-                                    alphaTex.GetPixel(i, j+1) == Color.white && 
-                                    alphaTex.GetPixel(i, j-1) == Color.white && 
-                                    alphaTex.GetPixel(i+1, j+1) == Color.white &&
-                                    alphaTex.GetPixel(i-1, j-1) == Color.white &&
-                                    alphaTex.GetPixel(i+1, j-1) == Color.white && 
-                                    alphaTex.GetPixel(i-1, j+1) == Color.white);
+                if (mirrorTex != null)
+                    inMirror = (mirrorTex.GetPixel(i, j) == Color.white &&
+                                mirrorTex.GetPixel(i + 1, j) == Color.white &&
+                                mirrorTex.GetPixel(i - 1, j) == Color.white &&
+                                mirrorTex.GetPixel(i, j + 1) == Color.white &&
+                                mirrorTex.GetPixel(i, j - 1) == Color.white &&
+                                mirrorTex.GetPixel(i + 1, j + 1) == Color.white &&
+                                mirrorTex.GetPixel(i - 1, j - 1) == Color.white &&
+                                mirrorTex.GetPixel(i + 1, j - 1) == Color.white &&
+                                mirrorTex.GetPixel(i - 1, j + 1) == Color.white);
 
-                if(mirrorTex != null)
-                    inMirror = (mirrorTex.GetPixel(i, j) == Color.white && 
-                                    mirrorTex.GetPixel(i+1, j) == Color.white && 
-                                    mirrorTex.GetPixel(i-1, j) == Color.white && 
-                                    mirrorTex.GetPixel(i, j+1) == Color.white && 
-                                    mirrorTex.GetPixel(i, j-1) == Color.white && 
-                                    mirrorTex.GetPixel(i+1, j+1) == Color.white &&
-                                    mirrorTex.GetPixel(i-1, j-1) == Color.white &&
-                                    mirrorTex.GetPixel(i+1, j-1) == Color.white && 
-                                    mirrorTex.GetPixel(i-1, j+1) == Color.white);
-                
                 // set hasHit to true if all 9 pixels are white
-                if (inAlpha && inMirror){
+                if (inAlpha && inMirror)
+                {
                     Debug.Log("Hit");
                     hasHit = true;
                     GameOverSequence();
-                    return;
+                    yield break;
                 }
-
             }
-            if(hasHit){
-                break;
-            }
-        } 
+            if(i % 5 == 0)
+                yield return null;
 
-        
+            if (hasHit)
+            {
+                yield break;
+            }
+        }
     }
 
     private Vector2 RecalculateUV(Vector2 uv)

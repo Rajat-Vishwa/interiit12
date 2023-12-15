@@ -56,29 +56,31 @@ public class LevelManager : MonoBehaviour
     {
         ScoreText.text = "Score : " + Score.ToString();
 
+        // Manually lerp the obstacle speed to the target speed
         if(obstacleSpeed < targetObstacleSpeed){
-            obstacleSpeed += Time.deltaTime * 2f;
+            obstacleSpeed += difficultySpeedIncrement / 10f;
         }
         else if(obstacleSpeed > targetObstacleSpeed){
             obstacleSpeed = targetObstacleSpeed;
         }
-        
+
         // Manage the obstacles
         if(obstacles[0].transform.localPosition.z <= endPos.z){
 
             currentLevel++;
 
-            if(currentLevel % 5 == 0){
+            if(currentLevel % 5 == 0 && currentLevel != 0){
                 difficulty++;
                 if(difficulty <= 5){
+                    //targetObstacleSpeed += difficultySpeedIncrement;
                     targetObstacleSpeed += difficultySpeedIncrement;
                 }
             }
 
-            if(difficulty % 5 == 0){
+            if(difficulty % 2 == 0 && difficulty <= 10){
                 rotateSpeed += rotateSpeedIncrement;
             }
-
+ 
             int randLevel = Random.Range(0, levelTextures.Length);
 
             obstacles[0].transform.localPosition = spawnPos;

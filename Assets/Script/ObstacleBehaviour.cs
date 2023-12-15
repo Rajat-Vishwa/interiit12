@@ -75,7 +75,7 @@ public class ObstacleBehaviour : MonoBehaviour
                     
                 }
             }
-            if(y % 10 == 0)
+            if(y % 5 == 0)
                 yield return null;
         }
         
