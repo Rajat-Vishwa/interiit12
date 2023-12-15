@@ -47,7 +47,8 @@ public class HighScore : MonoBehaviour {
         highscoreEntryTransformList = new List<Transform>();
         int maxEntriesToShow = 6;
 
-        for (int i = 0; i < Mathf.Min(highscores.highscoreEntryList.Count, maxEntriesToShow); i++) {
+        for (int i = 1; i < Mathf.Min(highscores.highscoreEntryList.Count, maxEntriesToShow); i++) {
+            Debug.Log(i);
             HighscoreEntry highscoreEntry = highscores.highscoreEntryList[i];
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
         }
@@ -128,3 +129,7 @@ public class HighScore : MonoBehaviour {
     }
 
 }
+
+
+
+
