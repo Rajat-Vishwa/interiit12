@@ -42,11 +42,11 @@ public class CollisionDetector : MonoBehaviour
     {
         // Shoot rays from each corner in the forward direction and check if they hit the obstacle and get the UV coordinates
         RaycastHit hit;
-        if (Physics.Raycast(bl.position, transform.forward, out hit, 100f, slicable))
+        if (Physics.Raycast(bl.position, bl.forward, out hit, 100f, slicable))
         {
             blUV = hit.textureCoord;
         }
-        if (Physics.Raycast(tr.position, transform.forward, out hit, 100f, slicable))
+        if (Physics.Raycast(tr.position, tr.forward, out hit, 100f, slicable))
         {
             trUV = hit.textureCoord;
         }
@@ -73,7 +73,7 @@ public class CollisionDetector : MonoBehaviour
         int alphaTexHeight = alphaTex.height;
         Color[] alphaTexPixels = alphaTex.GetPixels();
 
-        Color[] mirrorTexPixels = mirrorTex == null ? new Color[0] : mirrorTex.GetPixels();
+        Color[] mirrorTexPixels = mirrorTex == null ? null : mirrorTex.GetPixels();
 
         // Check for collision
         hasHit = await Task.Run(() => CheckForHit(alphaTexPixels, mirrorTexPixels, alphaTexWidth, alphaTexHeight, blUV, trUV));
@@ -112,17 +112,21 @@ public class CollisionDetector : MonoBehaviour
                             alphaTexPixels[pixelIndex + texWidth - 1] == Color.white &&
                             alphaTexPixels[pixelIndex - texWidth + 1] == Color.white);
 
-                if (mirrorTexPixels.Length != 0)
+                if (mirrorTexPixels != null)
                 {
-                    inMirror = (mirrorTexPixels[pixelIndex] == Color.white &&
-                                mirrorTexPixels[pixelIndex + 1] == Color.white &&
-                                mirrorTexPixels[pixelIndex - 1] == Color.white &&
-                                mirrorTexPixels[pixelIndex + texWidth] == Color.white &&
-                                mirrorTexPixels[pixelIndex - texWidth] == Color.white &&
-                                mirrorTexPixels[pixelIndex + texWidth + 1] == Color.white &&
-                                mirrorTexPixels[pixelIndex - texWidth - 1] == Color.white &&
-                                mirrorTexPixels[pixelIndex + texWidth - 1] == Color.white &&
-                                mirrorTexPixels[pixelIndex - texWidth + 1] == Color.white);
+                    try{
+                        inMirror = (mirrorTexPixels[pixelIndex] == Color.white &&
+                                    mirrorTexPixels[pixelIndex + 1] == Color.white &&
+                                    mirrorTexPixels[pixelIndex - 1] == Color.white &&
+                                    mirrorTexPixels[pixelIndex + texWidth] == Color.white &&
+                                    mirrorTexPixels[pixelIndex - texWidth] == Color.white &&
+                                    mirrorTexPixels[pixelIndex + texWidth + 1] == Color.white &&
+                                    mirrorTexPixels[pixelIndex - texWidth - 1] == Color.white &&
+                                    mirrorTexPixels[pixelIndex + texWidth - 1] == Color.white &&
+                                    mirrorTexPixels[pixelIndex - texWidth + 1] == Color.white);
+                    }catch(System.IndexOutOfRangeException e){
+                        Debug.Log("Index out of range");
+                    }
                 }
 
                 if (inAlpha && inMirror)
