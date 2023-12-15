@@ -24,7 +24,7 @@ public class CollisionDetector : MonoBehaviour
         currentObstacle = LevelManager.instance.obstacles[0];
 
         float dist = Mathf.Abs(transform.position.z - currentObstacle.transform.position.z);
-        Debug.Log("Distance: " + dist);
+        //Debug.Log("Distance: " + dist);
 
         if (dist <= minDist && !hasCheckedCollision)
         {

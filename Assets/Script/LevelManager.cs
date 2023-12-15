@@ -36,6 +36,8 @@ public class LevelManager : MonoBehaviour
     public int ScoreIncrement = 100;
     public bool gameOver = false;
 
+    public AudioSource bgmSound;
+
     void Start()
     {
         if(instance == null){
@@ -53,7 +55,8 @@ public class LevelManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
+
         ScoreText.text = "Score : " + Score.ToString();
 
         // Manually lerp the obstacle speed to the target speed
