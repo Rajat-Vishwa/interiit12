@@ -152,7 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49550458
 GameObject:
@@ -1322,7 +1322,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.08651455, y: 0.000000017141865, z: -0.0000000014886018, w: 0.9962506}
+  m_LocalRotation: {x: 0.08651455, y: -0.000000017141872, z: 0.0000000014886025, w: 0.9962506}
   m_LocalPosition: {x: 0, y: -0.5, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1474,7 +1474,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &377305522
 GameObject:
@@ -2590,7 +2590,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778366198}
-  m_LocalRotation: {x: 0.08651455, y: 0.000000017141865, z: -0.0000000014886018, w: 0.9962506}
+  m_LocalRotation: {x: 0.08651455, y: -0.000000017141872, z: 0.0000000014886025, w: 0.9962506}
   m_LocalPosition: {x: 0.15479966, y: 0.106805325, z: -3.6718526}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2680,6 +2680,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 830406300}
+  - component: {fileID: 830406301}
   m_Layer: 6
   m_Name: CollisionMarks
   m_TagString: Untagged
@@ -2694,8 +2695,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830406299}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -3, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2703,9 +2704,22 @@ Transform:
   - {fileID: 326734872}
   - {fileID: 641129073}
   - {fileID: 1856537825}
-  m_Father: {fileID: 4548324411162110184}
-  m_RootOrder: -1
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &830406301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830406299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be0698b85b4d5f418db147c684d0789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3486,7 +3500,7 @@ RectTransform:
   - {fileID: 1015017933}
   - {fileID: 1343345298}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4187,7 +4201,7 @@ Transform:
   m_Children:
   - {fileID: 483538613}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1305117312
 MonoBehaviour:
@@ -4203,7 +4217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: {x: 0, y: 0, z: 20}
   endPos: {x: 0, y: 0, z: -16.5}
-  obstacleSpeed: 6.4
+  obstacleSpeed: 8
   rotateSpeed: 0
   rotateSpeedIncrement: 0.5
   targetRotateSpeed: 0
@@ -4936,7 +4950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1637255231
 GameObject:
@@ -5121,7 +5135,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1658742130
 MonoBehaviour:
@@ -6097,7 +6111,7 @@ Transform:
   - {fileID: 778366200}
   - {fileID: 1218550108}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1895519180
 GameObject:
@@ -9938,9 +9952,8 @@ Transform:
   - {fileID: 5359037445023970090}
   - {fileID: 728048677}
   - {fileID: 1740950713}
-  - {fileID: 830406300}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4719350787398882266
 GameObject:
@@ -12152,7 +12165,9 @@ MonoBehaviour:
     m_Bits: 8
   hasCheckedCollision: 0
   hasHit: 0
-  minDist: 1.5
+  minDist: 1
+  alphaTex: {fileID: 0}
+  mirrorTex: {fileID: 0}
 --- !u!4 &8824088411041868060
 Transform:
   m_ObjectHideFlags: 0

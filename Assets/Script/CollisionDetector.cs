@@ -13,6 +13,8 @@ public class CollisionDetector : MonoBehaviour
     private GameObject currentObstacle;
     public float minDist;
 
+    public Texture2D alphaTex, mirrorTex;
+
     void Start()
     {
         slicable = LayerMask.GetMask("Slicable");
@@ -20,13 +22,13 @@ public class CollisionDetector : MonoBehaviour
         hasHit = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         currentObstacle = LevelManager.instance.obstacles[0];
         float dist = currentObstacle.transform.position.z - transform.position.z;
-        //Debug.Log("Distance: " + dist);
+        Debug.Log("Distance: " + dist);
 
-        if (dist <= minDist && !hasCheckedCollision)
+        if (dist <= minDist + LevelManager.instance.obstacleSpeed / 12.8f && !hasCheckedCollision)
         {
             CheckCollisionAsync();
             hasCheckedCollision = true;
@@ -62,11 +64,11 @@ public class CollisionDetector : MonoBehaviour
         blUV = RecalculateUV(blUV);
         trUV = RecalculateUV(trUV);
 
-        Debug.Log("UV Coordinates " + blUV + "; " + trUV);
+        Debug.Log("Collision UV Coordinates " + blUV + "; " + trUV);
 
         // Get both textures from the obstacle
-        Texture2D alphaTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_AlphaTexture") as Texture2D;
-        Texture2D mirrorTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_MirrorTexture") as Texture2D;
+        alphaTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_AlphaTexture") as Texture2D;
+        mirrorTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_MirrorTexture") as Texture2D;
 
         // Get texture properties on the main thread
         int alphaTexWidth = alphaTex.width;

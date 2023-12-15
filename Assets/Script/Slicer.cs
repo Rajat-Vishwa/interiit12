@@ -86,7 +86,7 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         RaycastHit hit;
 
         if(Physics.Raycast(ray, out hit, 100f, slicableLayer)){
-            Debug.Log(hit.collider.gameObject.name);
+            // Debug.Log(hit.collider.gameObject.name);
         }
         return hit;
     }
