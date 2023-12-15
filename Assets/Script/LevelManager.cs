@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
 
         targetObstacleSpeed = obstacleSpeed;
         targetRotateSpeed = rotateSpeed;
-        difficultySpeedIncrement = obstacleSpeed / 4f;
+        difficultySpeedIncrement = obstacleSpeed / 5f;
     }
 
     void Update()
@@ -74,8 +74,7 @@ public class LevelManager : MonoBehaviour
 
             if(currentLevel % 5 == 0 && currentLevel != 0){
                 difficulty++;
-                if(difficulty <= 5){
-                    //targetObstacleSpeed += difficultySpeedIncrement;
+                if(difficulty <= 2){
                     targetObstacleSpeed += difficultySpeedIncrement;
                 }
             }

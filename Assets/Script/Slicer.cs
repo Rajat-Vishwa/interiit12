@@ -48,7 +48,7 @@ public class Slicer : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         // Clamp UV Coordinates to the range [0, 1]
         startUV = new Vector2(Mathf.Clamp01(startUV.x), Mathf.Clamp01(startUV.y));
         endUV = new Vector2(Mathf.Clamp01(endUV.x), Mathf.Clamp01(endUV.y));
-        Debug.Log("Recalculated UV Coordinates " + startUV + "; " + endUV);
+        //Debug.Log("Recalculated UV Coordinates " + startUV + "; " + endUV);
 
         lineEnd.parent?.GetComponent<ObstacleBehaviour>().Slice(startUV, endUV);
 

@@ -26,7 +26,7 @@ public class CollisionDetector : MonoBehaviour
     {
         currentObstacle = LevelManager.instance.obstacles[0];
         float dist = currentObstacle.transform.position.z - transform.position.z;
-        Debug.Log("Distance: " + dist);
+        //Debug.Log("Distance: " + dist);
 
         if (dist <= minDist + LevelManager.instance.obstacleSpeed / 12.8f && !hasCheckedCollision)
         {
@@ -42,6 +42,7 @@ public class CollisionDetector : MonoBehaviour
 
     private async void CheckCollisionAsync()
     {
+        Debug .Log("Checking Collision");
         // Shoot rays from each corner in the forward direction and check if they hit the obstacle and get the UV coordinates
         RaycastHit hit;
         if (Physics.Raycast(bl.position, bl.forward, out hit, 100f, slicable))
@@ -52,6 +53,8 @@ public class CollisionDetector : MonoBehaviour
         {
             trUV = hit.textureCoord;
         }
+
+        Debug.Log("Collision UV Coordinates " + blUV + "; " + trUV);
 
         // If any of the UV coordinates are not set return from the function
         if (blUV == Vector2.zero || trUV == Vector2.zero)
@@ -64,7 +67,7 @@ public class CollisionDetector : MonoBehaviour
         blUV = RecalculateUV(blUV);
         trUV = RecalculateUV(trUV);
 
-        Debug.Log("Collision UV Coordinates " + blUV + "; " + trUV);
+        Debug.Log("Collision Recalculated UV Coordinates " + blUV + "; " + trUV);
 
         // Get both textures from the obstacle
         alphaTex = currentObstacle.GetComponentInChildren<MeshRenderer>().material.GetTexture("_AlphaTexture") as Texture2D;
@@ -148,6 +151,14 @@ public class CollisionDetector : MonoBehaviour
         LevelManager.instance.gameOver = true;
         LevelManager.instance.ScoreText.gameObject.SetActive(false);
         LevelManager.instance.gameObject.GetComponent<GameOverHandler>().GameOver();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            CheckCollisionAsync();
+        }
     }
 
 }
