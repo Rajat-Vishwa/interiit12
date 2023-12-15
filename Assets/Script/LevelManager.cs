@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     public float obstacleSpeed = 6.4f;
     public float rotateSpeed = 0f;
     public float rotateSpeedIncrement = 0.5f;
+    public float targetRotateSpeed = 0f;
+    public float targetObstacleSpeed = 0f;
 
     [Space]
     public GameObject ObstaclePrefab;
@@ -45,6 +47,8 @@ public class LevelManager : MonoBehaviour
         gameOver = false;   
         player = GameObject.Find("Player").transform;
 
+        targetObstacleSpeed = obstacleSpeed;
+        targetRotateSpeed = rotateSpeed;
         difficultySpeedIncrement = obstacleSpeed / 4f;
     }
 
@@ -52,15 +56,28 @@ public class LevelManager : MonoBehaviour
     {
         ScoreText.text = "Score : " + Score.ToString();
 
+        if(obstacleSpeed < targetObstacleSpeed){
+            obstacleSpeed += Time.deltaTime * 2f;
+        }
+        else if(obstacleSpeed > targetObstacleSpeed){
+            obstacleSpeed = targetObstacleSpeed;
+        }
+        
         // Manage the obstacles
         if(obstacles[0].transform.localPosition.z <= endPos.z){
 
             currentLevel++;
+
             if(currentLevel % 5 == 0){
                 difficulty++;
-                if(difficulty <= 10) obstacleSpeed += difficultySpeedIncrement;
+                if(difficulty <= 5){
+                    targetObstacleSpeed += difficultySpeedIncrement;
+                }
             }
-            if(difficulty % 5 == 0) rotateSpeed += rotateSpeedIncrement;
+
+            if(difficulty % 5 == 0){
+                rotateSpeed += rotateSpeedIncrement;
+            }
 
             int randLevel = Random.Range(0, levelTextures.Length);
 
