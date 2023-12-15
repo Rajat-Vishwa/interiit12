@@ -103,6 +103,8 @@ public class LevelManager : MonoBehaviour
             MirrorMount.parent = obstacles[0].transform;
             MirrorMount.localPosition = Vector3.zero;
 
+            // Call the obstacle's Awake() method to update the texture
+            obstacles[0].GetComponent<ObstacleBehaviour>().Awake();
         }
 
     }

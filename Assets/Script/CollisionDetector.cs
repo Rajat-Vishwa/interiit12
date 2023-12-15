@@ -109,7 +109,7 @@ public class CollisionDetector : MonoBehaviour
                     yield break;
                 }
             }
-            if(i % 5 == 0)
+            if(i % 100 == 0)
                 yield return null;
 
             if (hasHit)
