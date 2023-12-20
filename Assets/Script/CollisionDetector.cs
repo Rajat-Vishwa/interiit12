@@ -131,6 +131,7 @@ public class CollisionDetector : MonoBehaviour
                                     mirrorTexPixels[pixelIndex - texWidth + 1] == Color.white);
                     }catch(System.IndexOutOfRangeException e){
                         Debug.Log("Index out of range");
+                        inMirror = true;
                     }
                 }
 

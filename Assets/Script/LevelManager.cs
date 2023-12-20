@@ -56,7 +56,6 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {        
-
         ScoreText.text = "Score : " + Score.ToString();
 
         // Manually lerp the obstacle speed to the target speed
